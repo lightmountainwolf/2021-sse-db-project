@@ -7,26 +7,7 @@ var rcmd = new Vue({
     el: '.rcmd_box',
     data: {
         mark: 0,
-        goods: [
-            {
-                img: '../../Images/Home/index/a1.png', intro: "泰国进口金枕鲜榴莲1,泰国进口金枕鲜榴莲,泰国进口金枕1", shop: '金轮', link:'https://www.baidu.com/'
-            },
-            {
-                img: '../../Images/Home/index/a2.png', intro: '泰国进口金枕鲜榴莲2,泰国进口金枕鲜榴莲,泰国进口金枕2', shop: '金轮', link:''
-            },
-            {
-                img: '../../Images/Home/index/a3.png', intro: '泰国进口金枕鲜榴莲,泰国进口金枕鲜榴莲,泰国进口金枕3', shop: '金轮', link: ''
-            },
-            {
-                img: '../../Images/Home/index/a4.png', intro: '泰国进口金枕鲜榴莲,泰国进口金枕鲜榴莲,泰国进口金枕4', shop: '金轮', link: ''
-            },
-            {
-                img: '../../Images/Home/index/a5.png', intro: '泰国进口金枕鲜榴莲,泰国进口金枕鲜榴莲,泰国进口金枕5', shop: '金轮', link: ''
-            },
-            {
-                img: '../../Images/Home/index/a1.png', intro: '泰国进口金枕鲜榴莲,泰国进口金枕鲜榴莲,泰国进口金枕1', shop: '金轮', link: ''
-            },
-        ],
+        goods:[]
     }
 })
 
@@ -56,11 +37,29 @@ function getCookie(cname) {
 function getid() {
     let id = getCookie("buyerID")
     if (id) {
-        document.getElementById("utility1").innerHTML = `<a href="/Entry/BuyerLogOut">注销</a>`
+        document.getElementById("utility1").innerHTML = `<a href="/Entry/BuyerLogOut" >注销</a>`
     }
     return id
 }
 
-window.onload = getid()
+function getRcmd() {
+    $.ajax({
+        url: "/Home/RcmdCommodity",
+        type: "get",
+        dataType: "json", //返回数据格式为json
+        success: function (data) {//请求成功完成后要执行的方法
+            rcmd.goods = data
+            console.log("1")
+        }
+    })
+    
+}
+
+function start() {
+    getid()
+    getRcmd()
+}
+
+window.onload = start()
 
 
